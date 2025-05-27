@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,11 +38,55 @@
   </nav>
   
   <div class="container my-5">
+    <!-- Replace the Welcome section with a carousel -->
     <div class="row mb-4">
-      <div class="col-12 bg-light p-5 rounded">
-        <h1 class="text-left">Welcome to Global Technology Summit</h1>
-        <p class="text-left">Join top innovators, industry leaders, and experts shaping the future of technology.</p>
-        <button class="btn btn-primary">Get Your Ticket</button>
+      <div class="col-12 p-0">
+        <div id="welcomeCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#welcomeCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#welcomeCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#welcomeCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#welcomeCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+          </div>
+          <div class="carousel-inner rounded bg-light">
+            <div class="carousel-item active p-5">
+              <h1 class="text-center">Welcome to Global Technology Summit</h1>
+              <p class="text-center">Join top innovators, industry leaders, and experts shaping the future of technology.</p>
+              <div class="text-center">
+                <button class="btn btn-primary">Get Your Ticket</button>
+              </div>
+            </div>
+            <div class="carousel-item p-5">
+              <h1 class="text-center">Inspiring Keynotes</h1>
+              <p class="text-center">Hear from visionaries and pioneers in technology, business, and science.</p>
+              <div class="text-center">
+                <button class="btn btn-secondary">See Speakers</button>
+              </div>
+            </div>
+            <div class="carousel-item p-5">
+              <h1 class="text-center">Hands-on Workshops</h1>
+              <p class="text-center">Participate in interactive sessions to learn the latest tools and trends.</p>
+              <div class="text-center">
+                <button class="btn btn-secondary">View Workshops</button>
+              </div>
+            </div>
+            <div class="carousel-item p-5">
+              <h1 class="text-center">Global Networking</h1>
+              <p class="text-center">Connect with peers, mentors, and partners from around the world.</p>
+              <div class="text-center">
+                <button class="btn btn-secondary">Join Now</button>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#welcomeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#welcomeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -106,5 +150,34 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    // Detect Google Translate language changes and toggle RTL dynamically
+    (function() {
+      // List of RTL language codes
+      const rtlLangs = ['ar', 'he', 'fa', 'ur'];
+      let lastLang = document.documentElement.lang || 'en';
+
+      function isRtl(lang) {
+        return rtlLangs.some(code => lang.startsWith(code));
+      }
+
+      function updateDir() {
+        // Google Translate sets lang attribute on <html>
+        const html = document.documentElement;
+        const lang = html.getAttribute('lang') || 'en';
+        if (lang !== lastLang) {
+          lastLang = lang;
+          html.setAttribute('dir', isRtl(lang) ? 'rtl' : 'ltr');
+        }
+      }
+
+      // Observe changes to <html lang="">
+      const observer = new MutationObserver(updateDir);
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+
+      // Also poll every second in case Google Translate updates via JS
+      setInterval(updateDir, 1000);
+    })();
+  </script>
 </body>
 </html>
